@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    
+    .heading
+        h1= "#feckfriday"
+        p= "Lorem ipsum dolor sit amet consectetur adipisicing elit Iusto quam"
+
+
+    .tweets
+        - for tweet in tweets
+            include _partials/tweet

@@ -1,0 +1,59 @@
+
+@import 'normalize.less';
+@import 'preboot.less';
+@import 'plugins.less';
+
+/*
+|--------------------------------------------------------------------------
+| App
+|--------------------------------------------------------------------------
+*/
+
+body {
+    margin: 0 0 300px 0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+html, body {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Container
+|--------------------------------------------------------------------------
+*/
+
+@media( min-width: 1px )    { .container { margin: 0 15px; } }
+@media( min-width: 768px )  { .container { margin: 0 30px; } }
+@media( min-width: 980px )  { .container { margin: 0 auto; width: 960px;  } }
+@media( min-width: 1200px ) { .container { margin: 0 auto; width: 1170px; } }
+@media( min-width: 1680px ) { .container { margin: 0 30px; width: auto; } }
+
+@media( min-width: 768px )  { .row { .make-row() } }
+
+.container {
+    .clearfix();
+    &.container-relative {
+        position: relative;
+    }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Imports
+|--------------------------------------------------------------------------
+*/
+
+@import 'common';
+
