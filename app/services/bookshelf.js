@@ -4,7 +4,7 @@ var Config = require('../config');
 var knex = require('knex')({
     client: 'mysql',
     connection: Config.db,
-    debug: true
+    debug: false
 });
 
 var Bookshelf = require('bookshelf')(knex);

@@ -16,7 +16,7 @@ var express = require('express'),
 router.get('/', (req, res, next) => {
 
     var tweets = new models.Tweet().fetchAll({ withRelated: ['user'] }).catch((err) => {
-        console.log(err);
+        // console.log(err);
     })
 
     tweets.then((models) => {

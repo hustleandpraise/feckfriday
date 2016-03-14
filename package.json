@@ -30,7 +30,8 @@
         "slug" : "*",
         "twitter" : "*",
         "emoji-strip" : "*",
-        "slug" : "*"
+        "slug" : "*",
+        "socket.io" : "*"
     },
     "devDependencies": {
         "gulp": "^3.8.11",

@@ -8,7 +8,8 @@
 
 var app     = require('../app'),
     debug   = require('debug')('peaches:server'),
-    http    = require('http');
+    http    = require('http'),
+    stream  = require('../tstream');
 
 
 
@@ -32,6 +33,15 @@ app.set('port', port);
 var server = http.createServer(app);
 
 
+/*
+|--------------------------------------------------------------------------
+| Create Socket Server
+|--------------------------------------------------------------------------
+*/
+
+var io = require('socket.io')(server);
+
+stream.listen(io);
 
 /*
 |--------------------------------------------------------------------------

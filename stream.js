@@ -39,67 +39,114 @@ var userSetup = function(user) {
 
 /*
 |--------------------------------------------------------------------------
+| Hashtag Setup
+|--------------------------------------------------------------------------
+*/
+
+var addHash = function(tag) {
+    return new Promise((resolve, reject) => {
+
+        var findTag = new Models.Tag({ title: tag.text.toLowerCase() }).fetch();
+
+        findTag.then((model) => {
+            if(model === null) {
+                var newtag = new Models.Tag({ title: tag.text.toLowerCase() }).save();
+                newtag.then((newtagModel) => {
+                    resolve(newtagModel.get('id'));
+                }).catch((err) => {
+                    reject(err);
+                });
+            } else {
+                resolve(model.get('id'));
+            }
+        }).catch((err) => {
+            reject(err);
+        });
+
+    });
+}
+
+var setupHashtags = function(hashtags) {
+    if(hashtags.length <= 0) return [];
+    var arr = [];
+    hashtags.forEach((tag) => {
+        arr.push(addHash(tag))
+    });
+    console.log(arr);
+    return arr;
+}
+
+/*
+|--------------------------------------------------------------------------
 | Resolve Models to Stream
 |--------------------------------------------------------------------------
 */
 
-client.stream('statuses/filter', { track: 'lol', language: 'en', }, function(stream) {
+exports.listen = function(io) {
+    client.stream('statuses/filter', { track: '#feckfriday', language: 'en', }, function(stream) {
 
-    console.log('Stream Running...');
+        console.log('Stream Running...');
 
-    stream.on('data', (tweet) => {
+        stream.on('data', (tweet) => {
 
-        console.log(tweet);
+            console.log(tweet);
 
-        var original    = tweet,
-            tweet       = tweet.text.toLowerCase();
+            var original    = tweet,
+                tweet       = tweet.text.toLowerCase();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Filter out Bullshit
-        |--------------------------------------------------------------------------
-        */
+            /*
+            |--------------------------------------------------------------------------
+            | Filter out Bullshit
+            |--------------------------------------------------------------------------
+            */
 
-        if(tweet.includes('rt @')) return;
+            if(tweet.includes('rt @')) return;
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | Save Tweet, Locations, Categories and Tags
-        |--------------------------------------------------------------------------
-        */
+            /*
+            |--------------------------------------------------------------------------
+            | Save Tweet, Locations, Categories and Tags
+            |--------------------------------------------------------------------------
+            */
 
-        var u = original.user;
+            var u = original.user;
 
-        userSetup({
-            twitter_id: u.id,
-            username:   u.screen_name,
-            avatar:     u.profile_image_url_https,
-            verified:   u.verified
-        }).then((user) => {
+            userSetup({
+                twitter_id: u.id,
+                username:   u.screen_name,
+                avatar:     u.profile_image_url_https,
+                verified:   u.verified
+            }).then((user) => {
 
-            var saveTweet = new Models.Tweet({ 
-                user_id: user.id,
-                tweet_id: original.id,
-                text: emojiStrip(original.text),
-                tweet_created_at: new Date(original.created_at)
-            });
+                var saveTweet = new Models.Tweet({ 
+                    user_id: user.id,
+                    tweet_id: original.id,
+                    text: emojiStrip(original.text),
+                    tweet_created_at: new Date(original.created_at)
+                });
 
-            saveTweet.save().then((model) => {
-                console.log('Done!');
+                saveTweet.save().then((model) => {
+                    console.log(original.entities.hashtags);
+                    io.emit('tweet', { tweet: model.toJSON() });
+                    Promise.all(setupHashtags(original.entities.hashtags)).then((tags) => {
+                        model.tags().attach(tags).then((tags) => {
+                            console.log('Done!');
+                        });
+                    })
+                }).catch((err) => {
+                    console.log(err);
+                });
+
             }).catch((err) => {
                 console.log(err);
             });
 
-        }).catch((err) => {
-            console.log(err);
+        });
+
+        stream.on('error', (error) => {
+            console.log(error);
         });
 
     });
-
-    stream.on('error', (error) => {
-        console.log(error);
-    });
-
-});
+}
 
