@@ -83,7 +83,7 @@ var setupHashtags = function(hashtags) {
 */
 
 exports.listen = function(io) {
-    client.stream('statuses/filter', { track: '#feckfridayin, #feckfridayoff, #feckfridayawol, #feckfriday', language: 'en', }, function(stream) {
+    client.stream('statuses/filter', { track: '#FeckFridayIn, #FeckFridayOff, #FeckFridayAWOL, #FeckFriday', language: 'en', }, function(stream) {
 
         console.log('Stream Running...');
 
