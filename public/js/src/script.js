@@ -48,7 +48,7 @@ $(function() {
             value: $('body').data('in'),
             color: "rgba(255,255,255,0.4)",
             highlight: "rgba(255,255,255,0.5)",
-            label: "FeckFridayIn"
+            label: "FeckFridayWorking"
         },
         {
             value: $('body').data('awol'),
@@ -67,7 +67,6 @@ $(function() {
     });
 
     var socket = io();
-
 
     var showTweet = function(tweet) {
         var template = [
@@ -98,8 +97,6 @@ $(function() {
 
 
     socket.on('tweet', function(tweet) {
-        console.log(tweet);
-
         showTweet(tweet);
 
         var arr = [];
