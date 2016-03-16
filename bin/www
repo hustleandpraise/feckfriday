@@ -9,7 +9,7 @@
 var app     = require('../app'),
     debug   = require('debug')('peaches:server'),
     http    = require('http'),
-    stream  = require('../tstream');
+    stream  = require('../stream');
 
 
 

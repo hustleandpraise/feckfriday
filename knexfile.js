@@ -4,14 +4,14 @@ var Config = require('./app/config');
 
 module.exports = {
 
-  development: {
-    client: 'mysql',
-    connection: Config.db
-  },
+    development: {
+        client: 'mysql',
+        connection: Config.db
+    },
 
-  production: {
-    client: 'mysql',
-    connection: Config.db
-  }
+    production: {
+        client: 'mysql',
+        connection: Config.db
+    }
 
 };

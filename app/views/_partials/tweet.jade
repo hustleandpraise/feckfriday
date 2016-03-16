@@ -1,13 +1,13 @@
 
-.tweet-wrap
-    .tweet(style="background-color:" + tweet.color + ";")
-        .wrap
-            .text  
-                != tweet.text
-            .user
-                .row
-                    .username
-                        = "@" + tweet.user.username
-                    .date
-                        = moment(tweet.created_at).fromNow()
+.tweet
+    .wrap
+        .user
+            a(href="http://twitter.com/" + tweet.user.username)
+                img(src=tweet.user.avatar, alt=tweet.user.username)
+        .text
+            .username
+                a(href="http://twitter.com/" + tweet.user.username)= "@" + tweet.user.username
+            .chars!= tweet.text
+            .date= moment(tweet.created_at).fromNow()
+        
 

@@ -9,11 +9,12 @@ module.exports = function (shipit) {
             repositoryUrl: 'https://github.com/hustleandpraise/feckfriday.git',
             ignores: ['.git', 'node_modules'],
             rsync: ['--del'],
-            keepReleases: 2,
+            keepReleases: 2
+            // key: '~/.ssh/id_rsa.pub'
         },
 
         staging: {
-            servers: ''
+            servers: 'root@178.62.67.115'
         }
     });
 

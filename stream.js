@@ -83,7 +83,7 @@ var setupHashtags = function(hashtags) {
 */
 
 exports.listen = function(io) {
-    client.stream('statuses/filter', { track: '#feckfriday', language: 'en', }, function(stream) {
+    client.stream('statuses/filter', { track: '#feckfridayin, #feckfridayoff, #feckfridayawol, #feckfriday', language: 'en', }, function(stream) {
 
         console.log('Stream Running...');
 
@@ -126,8 +126,7 @@ exports.listen = function(io) {
                 });
 
                 saveTweet.save().then((model) => {
-                    console.log(original.entities.hashtags);
-                    io.emit('tweet', { tweet: model.toJSON() });
+                    io.emit('tweet', { user: user.toJSON(), tweet: model.toJSON(), hashtags: original.entities.hashtags });
                     Promise.all(setupHashtags(original.entities.hashtags)).then((tags) => {
                         model.tags().attach(tags).then((tags) => {
                             console.log('Done!');

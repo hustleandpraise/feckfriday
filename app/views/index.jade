@@ -1,12 +1,23 @@
 extends layout
 
 block content
+
+    a(href="/").logo
+        img(src="/img/logo.svg", alt="#feckfriday")
+    .content
+        .container 
+            .canvas-wrapper
+                canvas(id="feckitanyway" width="800" height="800")
+
+            ul.share
+                li
+                    a(href="https://twitter.com/home?status=%23FeckFridayIn")= "#FeckFridayIn"
+                li
+                    a(href="https://twitter.com/home?status=%23FeckFridayOut")= "#FeckFridayOut"
+                li
+                    a(href="https://twitter.com/home?status=%23FeckFridayAWOL#")= "#FeckFridayAWOL"
     
-    .heading
-        h1= "#feckfriday"
-        p= "Lorem ipsum dolor sit amet consectetur adipisicing elit Iusto quam"
-
-
     .tweets
         - for tweet in tweets
             include _partials/tweet
+        .fade

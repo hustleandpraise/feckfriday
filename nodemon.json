@@ -1,6 +1,7 @@
 {
     "ignore": [
         "app/public/",
-        "app/views/"
+        "app/views/",
+        "app/public/js/**/*"
     ]
 }
